@@ -3,36 +3,67 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import tukiLogo from "@/assets/tuki-logo.png";
+import loginBg from "@/assets/login-bg.jpg";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [isCreating, setIsCreating] = useState(false);
+  const [view, setView] = useState<"home" | "login" | "register">("home");
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
+  const [selectedAvatar, setSelectedAvatar] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     navigate("/");
   };
 
+  if (view === "home") {
+    return (
+      <div
+        className="min-h-screen flex flex-col items-center justify-between bg-cover bg-center"
+        style={{ backgroundImage: `url(${loginBg})` }}
+      >
+        <div className="flex-1 flex flex-col items-center justify-center">
+          <img src={tukiLogo} alt="TUKI" className="h-28 mb-4 animate-float drop-shadow-lg" />
+          <p className="text-muted-foreground font-body text-base text-center font-semibold">
+            Aprender é uma aventura! 🚀
+          </p>
+        </div>
+
+        <div className="w-full max-w-sm px-6 pb-12 flex gap-4">
+          <Button
+            onClick={() => setView("register")}
+            variant="outline"
+            size="xl"
+            className="flex-1 bg-white/90 backdrop-blur-sm border-2 border-border text-foreground font-display font-bold rounded-2xl shadow-lg"
+          >
+            Cadastrar
+          </Button>
+          <Button
+            onClick={() => setView("login")}
+            size="xl"
+            className="flex-1 font-display font-bold rounded-2xl shadow-lg"
+          >
+            Entrar
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  const isRegister = view === "register";
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-6 bg-background relative overflow-hidden">
-      {/* Decorative circles */}
-      <div className="absolute -top-20 -left-20 w-56 h-56 bg-primary/10 rounded-full blur-3xl" />
-      <div className="absolute -bottom-20 -right-20 w-56 h-56 bg-tuki-yellow/10 rounded-full blur-3xl" />
-      <div className="absolute top-1/3 right-0 w-32 h-32 bg-tuki-green/10 rounded-full blur-2xl" />
+    <div
+      className="min-h-screen flex flex-col items-center justify-center px-6 bg-cover bg-center"
+      style={{ backgroundImage: `url(${loginBg})` }}
+    >
+      <div className="w-full max-w-sm flex flex-col items-center">
+        <img src={tukiLogo} alt="TUKI" className="h-16 mb-6 animate-float" />
 
-      <div className="relative z-10 w-full max-w-sm flex flex-col items-center">
-        {/* Logo */}
-        <img src={tukiLogo} alt="TUKI" className="h-20 mb-2 animate-float" />
-        <p className="text-muted-foreground font-body text-sm mb-8 text-center">
-          Aprender é uma aventura! 🚀
-        </p>
-
-        {/* Form Card */}
-        <div className="w-full bg-card rounded-3xl p-6 shadow-xl border border-border">
+        <div className="w-full bg-white/90 backdrop-blur-md rounded-3xl p-6 shadow-xl border border-border">
           <h2 className="text-xl font-display font-bold text-center text-foreground mb-6">
-            {isCreating ? "Criar Perfil" : "Entrar"}
+            {isRegister ? "Criar Perfil" : "Entrar"}
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -48,7 +79,7 @@ const Login = () => {
               />
             </div>
 
-            {isCreating && (
+            {isRegister && (
               <div>
                 <label className="text-sm font-display font-bold text-foreground mb-1 block">
                   Idade
@@ -65,7 +96,7 @@ const Login = () => {
               </div>
             )}
 
-            {isCreating && (
+            {isRegister && (
               <div>
                 <label className="text-sm font-display font-bold text-foreground mb-1 block">
                   Escolha um avatar
@@ -75,7 +106,10 @@ const Login = () => {
                     <button
                       key={emoji}
                       type="button"
-                      className="w-12 h-12 rounded-full bg-muted flex items-center justify-center text-2xl card-bounce border-2 border-transparent hover:border-primary"
+                      onClick={() => setSelectedAvatar(emoji)}
+                      className={`w-12 h-12 rounded-full bg-muted flex items-center justify-center text-2xl card-bounce border-2 ${
+                        selectedAvatar === emoji ? "border-primary" : "border-transparent"
+                      } hover:border-primary`}
                     >
                       {emoji}
                     </button>
@@ -85,20 +119,28 @@ const Login = () => {
             )}
 
             <Button type="submit" className="w-full" size="xl">
-              {isCreating ? "Criar Perfil" : "Entrar"}
+              {isRegister ? "Criar Perfil" : "Entrar"}
             </Button>
           </form>
 
           <div className="mt-4 text-center">
             <button
               type="button"
-              onClick={() => setIsCreating(!isCreating)}
+              onClick={() => setView(isRegister ? "login" : "register")}
               className="text-sm text-primary font-bold font-display hover:underline"
             >
-              {isCreating ? "Já tenho perfil" : "Criar novo perfil"}
+              {isRegister ? "Já tenho perfil" : "Criar novo perfil"}
             </button>
           </div>
         </div>
+
+        <button
+          type="button"
+          onClick={() => setView("home")}
+          className="mt-4 text-sm text-foreground/70 font-display font-bold hover:underline"
+        >
+          ← Voltar
+        </button>
       </div>
     </div>
   );

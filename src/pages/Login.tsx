@@ -24,7 +24,7 @@ const Login = () => {
         style={{ backgroundImage: `url(${loginBg})` }}
       >
         <div className="flex-1 flex flex-col items-center justify-center">
-          <img src={tukiLogo} alt="TUKI" className="h-28 mb-4 animate-float drop-shadow-lg" />
+          <img src={tukiLogo} alt="TUKI" className="h-28 mb-4 animate-float" />
           <p className="text-muted-foreground font-body text-base text-center font-semibold">
             Aprender é uma aventura! 🚀
           </p>

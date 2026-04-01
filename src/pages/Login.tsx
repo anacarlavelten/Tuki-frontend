@@ -2,8 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import tukiLogo from "@/assets/tuki-logo.png";
-import loginBg from "@/assets/login-bg.jpg";
+import loginHero from "@/assets/login-hero.png";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,18 +18,13 @@ const Login = () => {
 
   if (view === "home") {
     return (
-      <div
-        className="min-h-screen flex flex-col items-center justify-between bg-cover bg-center"
-        style={{ backgroundImage: `url(${loginBg})` }}
-      >
-        <div className="flex-1 flex flex-col items-center justify-center">
-          <img src={tukiLogo} alt="TUKI" className="h-28 mb-4 animate-float" />
-          <p className="text-muted-foreground font-body text-base text-center font-semibold">
-            Aprender é uma aventura! 🚀
-          </p>
-        </div>
-
-        <div className="w-full max-w-sm px-6 pb-12 flex gap-4">
+      <div className="min-h-screen flex flex-col items-center justify-end relative overflow-hidden">
+        <img
+          src={loginHero}
+          alt="TUKI - Aprender é uma aventura"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="relative z-10 w-full max-w-sm px-6 pb-10 flex gap-4">
           <Button
             onClick={() => setView("register")}
             variant="outline"
@@ -54,13 +48,14 @@ const Login = () => {
   const isRegister = view === "register";
 
   return (
-    <div
-      className="min-h-screen flex flex-col items-center justify-center px-6 bg-cover bg-center"
-      style={{ backgroundImage: `url(${loginBg})` }}
-    >
-      <div className="w-full max-w-sm flex flex-col items-center">
-        <img src={tukiLogo} alt="TUKI" className="h-16 mb-6 animate-float" />
+    <div className="min-h-screen flex flex-col items-center justify-center px-6 relative overflow-hidden">
+      <img
+        src={loginHero}
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover opacity-40 blur-sm"
+      />
 
+      <div className="relative z-10 w-full max-w-sm flex flex-col items-center">
         <div className="w-full bg-white/90 backdrop-blur-md rounded-3xl p-6 shadow-xl border border-border">
           <h2 className="text-xl font-display font-bold text-center text-foreground mb-6">
             {isRegister ? "Criar Perfil" : "Entrar"}
@@ -137,7 +132,7 @@ const Login = () => {
         <button
           type="button"
           onClick={() => setView("home")}
-          className="mt-4 text-sm text-foreground/70 font-display font-bold hover:underline"
+          className="mt-4 text-sm text-white font-display font-bold hover:underline drop-shadow-md"
         >
           ← Voltar
         </button>
